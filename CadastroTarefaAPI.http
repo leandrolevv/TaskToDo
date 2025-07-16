@@ -1,0 +1,6 @@
+@CadastroTarefaAPI_HostAddress = http://localhost:5102
+
+GET {{CadastroTarefaAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
