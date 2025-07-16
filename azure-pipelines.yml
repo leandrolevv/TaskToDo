@@ -1,0 +1,27 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- script: dotnet restore
+  displayName: 'Restaurar pacotes'
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build do projeto'
+
+- script: dotnet test --no-build --verbosity normal
+  displayName: 'Rodar testes'
+
+- script: dotnet publish --configuration $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
+  displayName: 'Publicar aplicação'
